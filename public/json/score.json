@@ -1,0 +1,7 @@
+{
+	"scores":[
+		{"name": "짱구", "kor":95, "eng":85, "math":90},
+		{"name": "철수", "kor":90, "eng":90, "math":88},
+		{"name": "유리", "kor":85, "eng":80, "math":60}
+	]
+}

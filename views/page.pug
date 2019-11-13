@@ -1,0 +1,11 @@
+doctype html
+html(lang="ko")
+	head
+		include ./inc/header.pug
+	body
+		include ./inc/navi.pug
+		.container
+			.jumbotron.py-3.mt-3(style="background-color: #f5f2e3;")= `${page} page.`
+			.my-3.p-3.text-center.f-2 This page is written in pug.
+		include ./inc/footer.pug
+		include ./inc/script.pug

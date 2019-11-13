@@ -1,0 +1,73 @@
+doctype html
+html(lang="ko")
+	head
+		include ./inc/header.pug
+	body
+		include ./inc/navi.pug
+
+		.container.my-3
+			.jumbotron.d-flex.py-3.align-items-center(style="background-color: #f5f2e3;")
+				h3= `${title}`
+				i.fas.fa-pencil-alt.fa-2x.ml-2
+			table#gbook-tb.table.table-bordered.table-hover.my-3.text-center
+				colgroup
+					col(width="8%")
+					col(width="10%")
+					col(width="20%")
+					col
+					col(width="15%")
+				thead(style="background-color:#233052; color: #fff;")
+					tr
+						th NO.
+						th WRITER
+						th TIME
+						th COMMENT
+						th REMARKS
+				tbody
+					each item in datas
+						tr
+							td=	item.ID
+							td=	item.writer
+							td=	item.wtime
+							td.text-left.pl-4=	item.comment
+								if item.useIcon.new
+									img.ml-2(src="/img/icon/new(s).png", alt="new")
+								if item.useIcon.doc
+									img.ml-2(src="/img/icon/doc(s).png", alt="doc")
+								if item.useIcon.hwp
+									img.ml-2(src="/img/icon/hwp(s).png", alt="hwp")
+								if item.useIcon.pdf
+									img.ml-2(src="/img/icon/pdf(s).png", alt="pdf")
+								if item.useIcon.png
+									img.ml-2(src="/img/icon/png(s).png", alt="png")
+								if item.useIcon.ppt
+									img.ml-2(src="/img/icon/ppt(s).png", alt="ppt")
+								if item.useIcon.txt
+									img.ml-2(src="/img/icon/txt(s).png", alt="txt")
+								if item.useIcon.xls
+									img.ml-2(src="/img/icon/xls(s).png", alt="xls")
+								if item.useIcon.zip
+									img.ml-2(src="/img/icon/zip(s).png", alt="zip")
+								if item.useIcon.jpg
+									img.ml-2(src="/img/icon/jpg(s).png", alt="jpg")
+								if item.useIcon.gif
+									img.ml-2(src="/img/icon/gif(s).png", alt="gif")
+							td
+								- if(loginUser) {
+								- 	if(loginUser.id == item.userid || loginUser.grade == 9) {
+											button.btn.btn-danger.btn-sm.mr-2.btChg CHG
+											button.btn.btn-secondary.btn-sm.btRev2(data-page=`${pager.page}`) DEL
+								-		}
+								- } else {
+								-		if(item.userid == "") {
+											button.btn.btn-danger.btn-sm.mr-2.btChg CHG
+											button.btn.btn-secondary.btn-sm.btRev DEL
+								-		}
+								-	}
+			include ./inc/pager.pug
+		include ./inc/modal_vi.pug
+		include ./inc/modal_up.pug
+		include ./inc/modal_rm.pug
+		include ./inc/popup.pug
+		include ./inc/footer.pug
+		include ./inc/script.pug

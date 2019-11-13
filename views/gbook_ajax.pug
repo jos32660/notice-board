@@ -1,0 +1,27 @@
+doctype html
+html(lang="ko")
+	head
+		include ./inc/header.pug
+	body
+		include ./inc/navi.pug
+		.container.my-3
+			.jumbotron.py-3.text-left.d-flex.align-items-center(style="background-color: #f5f2e3;")
+				h3= title
+			table.gbook-tb.table.my-3.table-bordered.table-hover.text-center
+				colgroup
+					col(width="8%")
+					col(width="10%")
+					col(width="25%")
+					col
+					col(width="15%")
+				thead(style="background-color:#233052; color: #fff;")
+					tr
+						th NO.
+						th WRITER
+						th TIME
+						th COMMENT
+						th REMARKS
+				tbody
+			ul.pager.my-4.pagination.justify-content-center
+		include ./inc/footer.pug
+		include ./inc/script.pug

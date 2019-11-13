@@ -1,0 +1,37 @@
+doctype html
+html(lang="ko")
+	head
+		include ./inc/header.pug
+	body(style="text-align: center;")
+		include ./inc/navi.pug
+		.container.my-3
+			.jumbotron.py-3.text-left.d-flex.align-items-center(style="background-color: #f5f2e3;")
+				h3= `${title}`
+				i.fas.fa-pencil-alt.fa-2x.ml-2
+			form(action="/gbook_save" method="post" name="gForm" onsubmit="return onSend(this);" enctype="multipart/form-data")
+				ul.row.py-1.text-left
+					li.col-md-2 
+						.text-dark WRITER
+					li.col-md-10
+						input.form-control.mr-2(type="text" name="writer" placeholder="writer")
+				if !loginUser
+					ul.row.py-1.text-left
+						li.col-md-2 
+							.text-dark PASSWORD
+						li.col-md-10
+							input.form-control.mr-2(type="password" name="pw" placeholder="PW")
+				ul.row.py-1.text-left
+					li.col-md-2 
+						.text-dark COMMENT
+					li.col-md-10
+						textarea.form-control.mr-2(type="text" name="comment" style="height:100px" placeholder="한마디 남겨주세요.")
+				ul.row.py-1.text-left
+					li.col-md-2 
+						.text-dark ATTACHMENT
+					li.col-md-10
+						input.form-control-file.mr-2(name="upfile" type="file")
+				div.my-3
+					button.btn.my-2.text-white(type="submit", style="background-color:#233052;") SAVE
+					button.btn.my-2.text-white(type="reset", style="background-color:#888;") RESET
+	include ./inc/footer.pug
+	include ./inc/script.pug

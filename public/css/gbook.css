@@ -1,0 +1,5 @@
+html, body {height: 100%;}
+.icon {margin-left: 0.5rem; padding: 4px; border-radius: 8px; color: #f9f9f9; font-size: 0.75rem; text-align:center;}
+.icon-new {background-color: #233052; display: inline-block; line-height: 0.75rem; padding: 4px 6px;}
+.icon-file {background-color: #4d5e8a; padding: 5px;}
+.icon-img {background-color: #7689bb; padding: 5px;}

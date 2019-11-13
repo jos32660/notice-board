@@ -1,0 +1,45 @@
+doctype html
+html(lang="ko")
+	head
+		include ./inc/header.pug
+	body
+		include ./inc/navi.pug
+		.container.my-3
+			.jumbotron.d-flex.py-3.align-items-center(style="background-color: #f5f2e3;")
+				h3= `${title}`
+			table.table.table-bordered.text-center
+				colgroup
+					col(width="5%")
+					col(width="8%")
+					col(width="10%")
+					col(width="13%")
+					col(width="15%")
+					col
+					col(width="8%")
+				thead(style="background-color:#233052; color: #fff;")
+					tr
+						th No.
+						th GRADE
+						th ID
+						th NAME
+						th TEL
+						th ADRESS
+						th SET
+				tbody
+					each item in lists
+						tr
+							td= item.id
+							td= item.grade
+							td= item.userid
+							td= item.username
+							td= item.tel
+							td.text-left
+								span= `[${item.post}]`
+								br
+								span= `${item.addr1} ${item.addr2}`
+							td
+								if item.grade < 9
+									button.btn.btn-sm.btn-danger(onclick=`if(confirm('정말로 삭제 하시겠습니까?')){location.href='/mem/remove?id=${item.id}';}`) DEL
+			include ./inc/pager.pug
+		include ./inc/footer.pug
+		include ./inc/script.pug

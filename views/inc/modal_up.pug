@@ -1,0 +1,42 @@
+#update-modal.modal.fade(tabindex="-1", role="dialog", aria-hidden="true")
+	.modal-dialog.modal-dialog-centered(role="document")
+		.modal-content
+			.modal-body
+				form(action="/api/update", method="post", name="upForm", onsubmit="return onSend(this)", enctype="multipart/form-data")
+					input(type="hidden", name="id")
+					input(type="hidden", name="page", value=`${pager.page}`)
+					table.table.table-hover
+						tbody
+							tr
+								td(style="background-color:#233052; color: #fff;").text-light.text-center WRITER
+								td
+									input.form-control(name="writer")
+							if !loginUser
+								tr
+									td(style="background-color:#233052; color: #fff;").text-light.text-center PASSWORD
+									td
+										input.form-control(name="pw", type="password")
+										span.text-danger * 글 작성시 입력한 비밀번호를 넣어주세요.
+							tr
+								td(style="background-color:#233052; color: #fff;").text-light.text-center COMMENT
+								td 
+									textarea.form-control(name="comment", style="height: 200px;")
+							tr.img-tr.d-none
+								td(style="background-color:#233052; color: #fff;").text-light.text-center ATTACHMENT IMAGE
+								td
+									img.w-100(style="max-width:350px;")
+							tr.file-tr.d-none
+								td(style="background-color:#233052; color: #fff;").text-light.text-center ATTACHMENT FILE
+								td
+									//- a(href="#" download)
+									a
+							tr
+								td(style="background-color:#233052; color: #fff;").up-td.text-light.text-center.d-none ATTACHMENT FILE
+								td
+									input.form-control-file(type="file" name="upfile") 
+									span.text-danger * 첨부파일을 변경하시려면 추가하세요.
+					div.my-3.text-center
+						button.btn.btn-secondary CHG
+						button.btn.btn-danger(type="button", onclick="onReset();") RES
+			.modal-footer.justify-content-center
+				button#bt-close.btn.btn-dark(data-dismiss="modal") CLOSE

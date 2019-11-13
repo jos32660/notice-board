@@ -1,0 +1,34 @@
+link(rel="stylesheet" href="/css/navi.css")
+.navi.d-flex.justify-content-between.align-items-center.p-3.text-white#header(style="background-color: #233052;")
+	.logo.font-weight-bold
+		a(href="/" ) SU's Gestbook
+	ul.navi-ul.d-flex.align-items-center
+		li.mr-3
+			a(href="/gbook" ) Gestbook(Node.js)
+		li.mr-3
+			a(href="/gbook_ajax" ) Gestbook(Ajax)
+		li.mr-3
+			a(href="/gbook/in" ) Gestbook Write
+		-	if(loginUser) {
+			li.mr-3.font-weight-bold.position-relative
+				a(href="#")
+					i.fas.fa-user-circle.mr-2
+					span= loginUser.name
+				ul.mem-edit
+					li
+						a(href="/mem/edit") EDIT
+					li
+						a(href="/mem/logout") LOGOUT
+		-	}	else {
+			li.mr-3
+				a(href="/mem/join") Sign In
+			li.mr-3.font-weight-bold
+				a(href="/mem/login") LOGIN
+		-	}
+		- if(loginUser) {
+			- if(loginUser.grade == 9) {
+			li.mr-3
+				a(href="/mem/list") Gest List
+			- }
+		- }
+script(src="/js/navi.js")

@@ -1,0 +1,27 @@
+#gbook-modal.modal.fade(tabindex="-1", role="dialog", aria-hidden="true")
+	.modal-dialog.modal-dialog-centered(role="document")
+		.modal-content
+			.modal-body
+				table.table.table-hover
+					tbody
+						tr
+							td(style="background-color:#233052; color: #fff;").text-light.text-center WRITER
+							td
+						tr
+							td(style="background-color:#233052; color: #fff;").text-light.text-center TIME
+							td
+						tr
+							td(style="background-color:#233052; color: #fff;").text-light.text-center COMMENT
+							td 
+								div(style=" min-height: 200px;")
+						tr.img-tr.d-none
+							td(style="background-color:#233052; color: #fff;").text-light.text-center ATTACHMENT IMAGE
+							td
+								img.w-100(style="max-width:350px;")
+						tr.file-tr.d-none
+							td(style="background-color:#233052; color: #fff;").text-light.text-center ATTACHMENT FILE
+							td
+								//- a(href="#" download)
+								a
+			.modal-footer.justify-content-center
+				button#bt-close.btn.btn-dark(data-dismiss="modal") CLOSE

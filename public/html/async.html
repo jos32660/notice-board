@@ -1,0 +1,40 @@
+<script src="../js/jquery-3.4.1.min.js"></script>
+<script>
+//공통함수
+function err(err){
+	console.log(err);
+}
+
+//Ajax 함수
+async function getAjax(url){
+	return await $.ajax({url});
+}
+
+getAjax("../json/sample.json").then(getUser).catch(err);
+getAjax("../json/score.json").then(getScore).catch(err);
+
+function getUser(data){
+	console.log(data);
+}
+function getScore(data){
+	console.log(data);
+}
+
+// async 예제2
+async function add10(n){
+	return await n + 10;
+}
+add10(10).then(function(res){
+	console.log(res);
+});
+
+function add20(n){
+	return n + 20;
+}
+function sum(n){
+	var n2 = add10(n);
+	var n3 = add20(n2);
+	return n3;
+}
+
+</script>
