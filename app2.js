@@ -21,7 +21,7 @@ const pager = require("./modules/pager");
 const mt = require("./modules/multer_conn");
 
 //전역변수 선언
-const sqlPool = db.sqlPool;
+const sqlPool = db.sqlPool; 
 const sqlExec = db.sqlExec;
 const sqlErr = db.sqlErr;
 const mysql = db.mysql;

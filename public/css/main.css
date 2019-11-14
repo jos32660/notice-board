@@ -1,0 +1,21 @@
+html,body {height: 100%;  background: #111930;}
+.main-wrap{height: 100%; width: 100%; position: relative;}
+.top-navi{text-align: right; color: #fff; margin-right: 14%; padding-top: 3%; font-size: 1.2rem; display: flex; justify-content: flex-end;}
+.top-navi > li {margin: 0 2%;}
+.main-img {margin: 0 auto; text-align: center;}
+.main-img > img {width: 65%; margin: 0 auto;}
+.main-logo {position: absolute; top: 16%; left: 12%;}
+.main-logo > img {width: 45%;}
+.navi-wrap {width: 100%; display: flex; justify-content: space-evenly; align-items: center; color: #fff; margin-top: 0;}
+.abs {display: flex; justify-content: center; align-items: center; color: #fff;margin: 5% 0; display: none;}
+.ab-img{flex: 30% 0 1; margin-right: -4%;}
+.ab-img > img {border-radius: 50%; width: 50%;}
+.ab-conts { flex: 40% 0 1; margin-left: -5%;}
+.ab-tit {margin: 2% 0;}
+.ab-tit > span {font-size: 2rem;}
+.ab-cont {font-size: 0.875rem; color: #d1d1d1; text-align: justify;}
+
+.pto-img{display: flex; justify-content: center; align-items: center;}
+.pto-img > li {flex: 33.3333%; width: 300px; height: 300px; max-width: 100%; max-height: 100%; overflow: hidden;}
+.pto-img .artist img {margin-top: -30%;}
+.pto-img img {width: 100%; height: auto; }
