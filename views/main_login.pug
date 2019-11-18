@@ -1,0 +1,32 @@
+doctype html
+html(lang="ko")
+	head
+		include ./inc/header.pug
+	body
+		include ./inc/navi2.pug
+		.container.text-center(style="margin: 10% auto;")
+			h3.my-4.text-light= `${title}`
+			form.text-left(name="loginForm" method="post" action="/main/login" onsubmit="return memberLogin(this);")
+				table.table.table-sm.mx-auto(style="max-width: 400px; border-bottom: 1px solid #fff;")
+					colgroup
+						col(width="30%")
+						col
+					thead
+						tr
+							th.p-3.f-125.text-light(colspan="2")
+								span USER LOGIN
+					tbody
+						tr
+							td.px-3(style="color: #fff;") ID
+							td.p-3
+								input.form-control(type="text" name="loginid" id="loginid" placeholder="아이디" style="background-color: transparent; color:#fff;")
+						tr
+							td.px-3(style="color: #fff;") PASSWORD
+							td.p-3
+								input.form-control(type="password" name="loginpw" id="loginpw" style="background-color: transparent; color:#fff;")
+								span.userpw-cmt
+				.my-3.text-center
+					button.btn.btn-danger LOGIN
+					button.btn.btn-secondary(type="button" onclick="location.href='/mem/join';") SIGN IN
+		include inc/footer.pug
+		include inc/script.pug

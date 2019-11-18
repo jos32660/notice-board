@@ -1,0 +1,78 @@
+doctype html
+html(lang="ko")
+	head
+		include ./inc/header.pug
+	body
+		include ./inc/navi2.pug
+		.container.my-3(style="text-align: center;")
+			h3.text-light.my-4= `${title}`
+			form.text-left(name="memberForm" method="post" action="/main/update" onsubmit="return memberJoin(this);")
+				table.table(style="border-bottom: 1px solid #fff;")
+					colgroup
+						col(width="20%")
+						col
+					tbody
+						tr
+							td(style="color: #fff;") ID
+							td.form-inline
+								input.form-control.mr-3(type="text" name="userid" id="userid" placeholder="아이디" style="max-width: 200px;"  value=`${myData.userid}` readonly disabled data-use="T")
+						tr
+							td(style="color: #fff;") PASSWORD
+							td.form-inline
+								input.form-control(type="password" name="userpw" id="userpw" style="max-width: 200px;")
+								span.userpw-cmt
+						tr
+							td(style="color: #fff;") PASSWORD CHECK
+							td.form-inline
+								input.form-control(type="password" name="userpw2" id="userpw2" style="max-width: 200px;")
+								span.userpw-cmt2
+						tr
+							td(style="color: #fff;") NAME
+							td
+								input.form-control(type="text" name="username" id="username" style="max-width: 200px;" value=`${myData.username}`)
+						tr
+							td(style="color: #fff;") TEL
+							td.form-inline
+								select.form-control(name="tel1" id="tel1" style="max-width:100px;")
+									- var myTel = myData.tel.split("-")
+									each item in tel
+										if item == myTel[0]
+											option(value=item selected)= item
+										else
+											option(value=item)= item
+								span.mx-2 -
+								input.form-control(type="number" name="tel2" id="tel2" min="0" max="9999" style="max-width:100px;" oninput="telChk(this);" value=`${myTel[1]}`)
+								span.mx-2 -
+								input.form-control(type="number" name="tel3" id="tel3" min="0" max="9999" style="max-width:100px;" oninput="telChk(this);" value=`${myTel[2]}`)
+						tr
+							td(style="color: #fff;") POSTAL CODE
+							td.form-inline
+								input.form-control(type="text" name="post" id="post" style="max-width: 200px;" readonly value=`${myData.post}`)
+								span &nbsp;
+								button.btn.btn-danger(type="button" onclick="daumPostcode();") POSTAL CODE
+						tr
+							td(style="color: #fff;") LOAD NAME ADDRESS
+							td
+								- var addrIndex = myData.addr1.indexOf(" (");
+								- var addr1 = "";
+								- var addr2 = "";
+								- if(addrIndex > -1) {
+								- addr1 = myData.addr1.substr(0, addrIndex)
+								- addr2 = myData.addr1.substr(addrIndex + 1)
+								- } else {
+								- addr1 = myData.addr1;
+								- }
+								input.form-control(type="text" name="addr1" id="addr1" readonly value=`${addr1}`)
+								span(id="guide" style="color:#999; display:none;")
+						tr
+							td(style="color: #fff;") DETAILED ADDRESS
+							td.form-inline
+								input.form-control(type="text" name="addr3" id="addr3" placeholder="상세주소" value=`${myData.addr2}`)
+								input.form-control(type="text" name="addr2" id="addr2" placeholder="참고항목" style="width: 30%; margin-left: 8px;" value=`${addr2}`)
+				.my-3.text-center
+					button.btn.btn-light CHG
+					button.btn.btn-danger(type="button" onclick="location.href='/';") CEL
+		include inc/footer.pug
+		script(src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js")
+		script(src="/js/post_search.js")
+		include inc/script.pug

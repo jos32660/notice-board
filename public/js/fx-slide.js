@@ -1,7 +1,7 @@
 /*
 // 사용자가 쓰는 법
-var obj = {
-	container: $(".slides"), 		//필수
+var obj = new FxSlide ({
+	slides: $(".slides"), 		//필수
 	speed: 500, 								//애니메이트 속도(def: 500)
 	delay: 3000, 								//애니메이션 딜레이(def: 3000)
 	autoplay: true, 						//자동움직임(def: true)
@@ -10,8 +10,7 @@ var obj = {
 	prev: $(".pager-prev"), 		//(def: 500)
 	next: $(".pager-next"), 		//(def: 500)
 	pager: $(".pagers")					//넣거나 말거나
-}
-var slide1 = new Fxslide(obj);
+});
 */
 var FxSlide = (function(){
 	function FxSlide(obj){

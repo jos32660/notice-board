@@ -1,0 +1,35 @@
+doctype html
+html(lang="ko")
+	head
+		include ./inc/header.pug
+	body
+		include ./inc/navi2.pug
+		.container.text-center(style="margin:10% auto;")
+			h3.text-light.py-4= `${title}`
+			form(action="/gbook2_save" method="post" name="gForm" onsubmit="return onSend(this);" enctype="multipart/form-data")
+				ul.row.py-1.text-left
+					li.col-md-3
+						.text-light(style="margin-left:40%;") WRITER
+					li.col-md-6
+						input.form-control.mr-2(type="text" name="writer" placeholder="writer")
+				if !loginUser
+					ul.row.py-1.text-left
+						li.col-md-3
+							.text-light(style="margin-left:40%;") PASSWORD
+						li.col-md-6
+							input.form-control.mr-2(type="password" name="pw" placeholder="PW")
+				ul.row.py-1.text-left
+					li.col-md-3
+						.text-light(style="margin-left:40%;") COMMENT
+					li.col-md-6
+						textarea.form-control.mr-2(type="text" name="comment" style="height:200px" placeholder="한마디 남겨주세요.")
+				ul.row.py-1.text-left
+					li.col-md-3
+						.text-light(style="margin-left:40%;") ATTACHMENT
+					li.col-md-6
+						input.form-control-file.mr-2.text-light(name="upfile" type="file")
+				div.my-3
+					button.btn.my-2.text-white(type="submit", style="background-color:#233052;") SAVE
+					button.btn.my-2.text-white(type="reset", style="background-color:#888;") RESET
+	include ./inc/footer.pug
+	include ./inc/script.pug

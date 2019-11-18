@@ -69,11 +69,18 @@ app.get(["/gbook", "/gbook/:type", "/gbook/:type/:id"],(req, res) => {
 	var type = req.params.type;
 	var id = req.params.id;
 	if(!util.nullChk(type)) type = "li";
+	if(!util.nullChk(type)) type = "li2";
 	if(type === "li" && !util.nullChk(id)) id = 1;
-	if(!util.nullChk(id) && type !== "in") res.redirect("/404.html");
+	if(type === "li2" && !util.nullChk(id)) id = 1;
+	if(!util.nullChk(id) && type !== "in" && !util.nullChk(id) && type !== "in2") res.redirect("/404.html");
 	var vals = {
 		css: "gbook",
 		js: "gbook",
+		loginUser: req.session.user
+	}
+	var vals2 = {
+		css: "main",
+		js: "main",
 		loginUser: req.session.user
 	}
 	var pug;
@@ -85,6 +92,34 @@ app.get(["/gbook", "/gbook/:type", "/gbook/:type/:id"],(req, res) => {
 			vals.title = "Gest book write";
 			pug = "gbook_in";
 			res.render(pug, vals);
+			break;
+		case "in2":
+			vals2.title = "Oui Oui Board write";
+			pug = "gbook2_in";
+			res.render(pug, vals2);
+			break;
+		case "li2" :
+			(async () => {
+				var totCnt = 0;
+				var page = id;
+				var divCnt = 3; 
+				var grpCnt = 5;
+				sql = "SELECT count(ID) FROM gbook";
+				result = await sqlExec(sql);
+				totCnt = result[0][0]["count(ID)"];
+				const pagerVal = pager.pagerMaker({totCnt, page, grpCnt});
+				pagerVal.link = "/gbook/li2/";
+				sql = "SELECT * FROM gbook ORDER BY ID DESC limit ?, ?";
+				sqlVal = [pagerVal.stRec, pagerVal.grpCnt];
+				result = await sqlExec(sql, sqlVal);
+				vals2.datas = result[0];
+				for(let item of vals2.datas) item.useIcon = util.iconChk(item.wtime,item.savefile);
+				vals2.title = "Oui Oui site";
+				vals2.pager = pagerVal;
+				for(let item of vals2.datas) item.wtime = util.dspDate(new Date(item.wtime));
+				pug = "gbook2";
+				res.render(pug, vals2);
+			})();
 			break;
 		case "li":
 			//() => {} : {}를 실행
@@ -260,6 +295,7 @@ app.post("/api/:type", mt.upload.single("upfile"), (req, res) => {
 						else obj.msg = "패스워드가 올바르지 않습니다.";
 					}
 					obj.loc = "/gbook/li/"+page;
+					obj.loc = "/gbook/li2/"+page;
 					res.send(util.alertLocation(obj));
 					// if(result[0].changedRows < 1)
 				})();
@@ -348,15 +384,50 @@ app.post("/gbook_save", mt.upload.single("upfile"), (req, res) => {
 		else res.redirect("/500.html");
 	})();
 });
+app.post("/gbook2_save", mt.upload.single("upfile"), (req, res) => {
+	var writer = req.body.writer;   //body-parser의 body를 POST, form의 name의 writer
+	var comment = req.body.comment; //body-parser의 body를 POST, form의 name의 comment
+	var pw = "";					  				//body-parser의 body를 POST, form의 name의 pw
+	var userid = "";
+	if(req.session.user) userid = req.session.user.id;
+	else pw = req.body.pw;
+	var orifile = "";
+	var savefile = "";
+	if(req.file) {
+		orifile = req.file.originalname;
+		savefile = req.file.filename;
+	}
+	var result;
+
+	var sql = "INSERT INTO gbook SET comment=?, wtime=?, writer=?, pw=?, orifile=?, savefile=?, userid=?";
+	var vals = [comment, util.dspDate(new Date()), writer, pw, orifile, savefile, userid];
+	(async () => {
+		result = await sqlExec(sql, vals);
+		if(result[0].affectedRows > 0) {
+			if(req.fileValidateError === false) {
+				res.send(util.alertLocation({
+					msg:"허용되지 않는 파일형식 이므로 파일을 업로드 하지 않았습니다. 첨부파일을 제외한 내용은 저장되었습니다.",
+					loc: "/gbook/li2"
+				}));
+			}
+			else res.redirect("/gbook/li2");
+		}
+		else res.redirect("/500.html");
+	})();
+});
 
 /* 회원가입 및 로그인 등 */
 
 /* 회원가입 라우터 */
 app.get(["/mem/:type", "/mem/:type/:id"], memEdit); // 회원가입, 아이디/비번찾기, 회원리스트, 회원정보, 로그인, 로그아웃
+app.get(["/main/:type", "/main/:type/:id"], mainEdit); // 회원가입, 아이디/비번찾기, 회원리스트, 회원정보, 로그인, 로그아웃
 app.post("/api-mem/:type", memApi); // 회원가입시 각종 Ajax
 app.post("/mem/join", memJoin); 		// 회원가입 저장
+app.post("/main/join", mainJoin); 		// 회원가입 저장2
 app.post("/mem/login", memLogin); 	//회원 로그인 모듈 
+app.post("/main/login", mainLogin); 	//회원 로그인 모듈 
 app.post("/mem/update", memUpdate); //회원 정보 수정 
+app.post("/main/update", mainUpdate); //회원 정보 수정 
 
 
 
@@ -430,6 +501,75 @@ function memEdit(req, res) {
 			break;
 	}
 }
+function mainEdit(req, res) {
+	// loginUser = req.session.user;
+	const type = req.params.type;
+	const vals = {css: "main", js: "mem" , loginUser: req.session.user};
+	switch (type) {
+		case "join":
+			vals.title = "Sign In";
+			vals.tel = util.telNum;
+			res.render("main_in", vals);
+			break;
+		case "login":
+			vals.title = "Login";
+			res.render("main_login", vals);
+			break;
+		case "logout":
+			req.session.destroy();
+			res.redirect("/gbook/li2");
+			break;
+		case "edit":
+			(async () => {
+				sql = "SELECT * FROM member WHERE userid='"+req.session.user.id+"'";
+				result = await sqlExec(sql);
+				vals.title = "User Edit";
+				vals.myData = result[0][0];
+				vals.tel = util.telNum;
+				res.render("main_up", vals);
+			})();
+			break;
+		case "remove":
+			if(util.adminChk(req.session.user)) {
+				var id = req.query.id;
+				(async () => {
+					sql = "DELETE FROM member WHERE id="+id;
+					result = await sqlExec(sql);
+					if(result[0].affectedRows == 1) res.send(util.alertLocation({
+						msg: "삭제되었습니다.",
+						loc: "/main/list"
+					}));
+					else res.send(util.alertLocation({
+						msg: "삭제가 실패하였습니다.",
+						loc: "/main/list"
+					}));
+				})();
+			}
+			else res.send(util.alertAdmin());
+			break;
+		case "list":
+			var totCnt = 0;
+			var page = req.params.id;
+			var divCnt = 3; 
+			var grpCnt = 5;
+			if(!util.nullChk(page)) page = 1;
+			vals.title = "User List - admin";
+			(async () => {
+				sql = "SELECT count(id) FROM member";
+				result = await sqlExec(sql);
+				totCnt = result[0][0]["count(id)"];
+				const pagerVal = pager.pagerMaker({totCnt, page, grpCnt});
+				pagerVal.link = "/main/list/";
+				sql = "SELECT * FROM member ORDER BY id DESC limit ?, ?";
+				result = await sqlExec(sql, [pagerVal.stRec, pagerVal.grpCnt]);
+				vals.lists = result[0];
+				vals.pager = pagerVal;
+				if(util.adminChk(req.session.user)) res.render("main_list", vals);
+				else res.send(util.alertAdmin());
+			})();
+			break;
+	}
+}
 
 /* 함수구현 - POST */
 function memApi(req, res){
@@ -474,6 +614,29 @@ function memJoin(req, res){
 		}));
 	})();
 }
+function mainJoin(req, res){
+	const vals = [];
+	var userpw = crypto.createHash("sha512").update(req.body.userpw + salt).digest("base64");
+	vals.push(req.body.userid);
+	vals.push(userpw);
+	vals.push(req.body.username);
+	vals.push(req.body.tel1 + "-" +req.body.tel2 + "-" + req.body.tel3);
+	vals.push(req.body.post);
+	vals.push(req.body.addr1 + req.body.addr2);
+	vals.push(req.body.addr3);
+	vals.push(new Date());
+	vals.push(2);
+	var sql = "";
+	var result = {};
+	(async () => {
+		sql = "INSERT INTO member SET userid=?, userpw=?, username=?, tel=?, post=?, addr1=?, addr2=?, wtime=?, grade=?";
+		result = await sqlExec(sql, vals);
+		res.send(util.alertLocation({
+			msg: "회원으로 가입되었습니다.",
+			loc: "/main/login"
+		}));
+	})();
+}
 
 // 회원정보수정
 function memUpdate(req, res){
@@ -494,6 +657,27 @@ function memUpdate(req, res){
 		if(result[0].affectedRows == 1) res.send(util.alertLocation({
 			msg: "정보가 수정되었습니다.",
 			loc: "/"
+		}));
+	})();
+}
+function mainUpdate(req, res){
+	const vals = [];
+	var userpw = crypto.createHash("sha512").update(req.body.userpw + salt).digest("base64");
+	vals.push(userpw);
+	vals.push(req.body.username);
+	vals.push(req.body.tel1 + "-" +req.body.tel2 + "-" + req.body.tel3);
+	vals.push(req.body.post);
+	vals.push(req.body.addr1 + " " + req.body.addr2);
+	vals.push(req.body.addr3);
+	vals.push(req.session.user.id);
+	var sql = "";
+	var result = {};
+	(async () => {
+		sql = "UPDATE member SET userpw=?, username=?, tel=?, post=?, addr1=?, addr2=? WHERE userid=?";
+		result = await sqlExec(sql, vals);
+		if(result[0].affectedRows == 1) res.send(util.alertLocation({
+			msg: "정보가 수정되었습니다.",
+			loc: "/gbook/li2"
 		}));
 	})();
 }
@@ -518,11 +702,46 @@ function memLogin(req, res) {
 			req.session.user.grade = result[0][0].grade;
 			res.redirect("/");
 		}
+		else if(result[0].length == 0) {
+			req.session.destroy();
+			res.send(util.alertLocation({
+				msg: "아이디와 패스워드가 일치하지 않습니다.",
+				loc: "/main/login"
+			}));
+		}
 		else {
 			req.session.destroy();
 			res.send(util.alertLocation({
 				msg: "아이디와 패스워드가 일치하지 않습니다.",
 				loc: "/mem/login"
+			}));
+		}
+	})();
+}
+function mainLogin(req, res) {
+	var userid =  req.body.loginid;
+	var userpw =  req.body.loginpw;
+	var result;
+	var sql = "";
+	var vals = [];
+	userpw = crypto.createHash("sha512").update(userpw + salt).digest("base64");
+	(async () => {
+		sql = "SELECT * FROM member WHERE userid=? AND userpw=?";
+		vals.push(userid);
+		vals.push(userpw);
+		result = await sqlExec(sql, vals);
+		if(result[0].length == 1) {
+			req.session.user = {};
+			req.session.user.id = userid;
+			req.session.user.name = result[0][0].username;
+			req.session.user.grade = result[0][0].grade;
+			res.redirect("/gbook/li2");
+		}
+		else {
+			req.session.destroy();
+			res.send(util.alertLocation({
+				msg: "아이디와 패스워드가 일치하지 않습니다.",
+				loc: "/main/login"
 			}));
 		}
 	})();

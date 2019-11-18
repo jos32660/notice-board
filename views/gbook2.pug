@@ -1,0 +1,114 @@
+doctype html
+html(lang='ko')
+	head
+		include ./inc/header.pug
+	body
+		.main-wrap
+			include ./inc/navi2.pug
+			.main-img
+				img.img(src='../img/main.png', alt='main')
+			.main-logo
+				img.img(src='../img/ouioui logo.png', alt='logo')
+		ul.navi-wrap
+			li BOARD
+			li ALBUM INFO.
+			li PHOTO
+			li VIDEO
+		.nav.nav-active
+			table#gbook-tb.table.my-3.text-center
+				colgroup
+					col(width="8%")
+					col(width="10%")
+					col
+					col(width="20%")
+					col(width="15%")
+				thead(style="color: #fff;")
+					tr
+						th NO.
+						th WRITER
+						th COMMENT
+						th TIME
+						th REMARKS
+				tbody(style="color: #fff;")
+					each item in datas
+						tr
+							td=	item.id
+							td=	item.writer
+							td.text-left.pl-4=	item.comment
+								if item.useIcon.new
+									img.ml-2(src="/img/icon/new(s).png", alt="new")
+								if item.useIcon.doc
+									img.ml-2(src="/img/icon/doc(s).png", alt="doc")
+								if item.useIcon.hwp
+									img.ml-2(src="/img/icon/hwp(s).png", alt="hwp")
+								if item.useIcon.pdf
+									img.ml-2(src="/img/icon/pdf(s).png", alt="pdf")
+								if item.useIcon.png
+									img.ml-2(src="/img/icon/png(s).png", alt="png")
+								if item.useIcon.ppt
+									img.ml-2(src="/img/icon/ppt(s).png", alt="ppt")
+								if item.useIcon.txt
+									img.ml-2(src="/img/icon/txt(s).png", alt="txt")
+								if item.useIcon.xls
+									img.ml-2(src="/img/icon/xls(s).png", alt="xls")
+								if item.useIcon.zip
+									img.ml-2(src="/img/icon/zip(s).png", alt="zip")
+								if item.useIcon.jpg
+									img.ml-2(src="/img/icon/jpg(s).png", alt="jpg")
+								if item.useIcon.gif
+									img.ml-2(src="/img/icon/gif(s).png", alt="gif")
+							td=	item.wtime
+							td
+								- if(loginUser) {
+								- 	if(loginUser.id == item.userid || loginUser.grade == 9) {
+											button.btn.btn-danger.btn-sm.mr-2.btChg CHG
+											button.btn.btn-secondary.btn-sm.btRev2(data-page=`${pager.page}`) DEL
+								-		}
+								- } else {
+								-		if(item.userid == "") {
+											button.btn.btn-danger.btn-sm.mr-2.btChg CHG
+											button.btn.btn-secondary.btn-sm.btRev DEL
+								-		}
+								-	}
+			include ./inc/pager.pug
+		.nav
+			.abs
+				.ab-img
+					img.img(src='../img/restmb_allidxmake.jpeg', alt='album')
+				ul.ab-conts
+					li.ab-tit 결코 멀어질 수 없는, 멀어지고 싶지 않은 매력, OuiOui(위위)의 새 싱글
+						span “멀어지지 않게”
+					li.ab-cont
+						span 아무리 이기적인 단어를 뱉어도 떠나 보낼 수 없을 것 같은, OuiOui(위위)의 새로운 싱글 [멀어지지 않게] 는 요즘 같은 변덕스러운 날씨와 어울리는
+						span 곡이다. 뜨거워진 한낮의 열기가 시간이 지나 차갑게 변하는 밤, 딱 그 정도의 온도를 가진 노래. 타오르던 사랑의 순간은 이런 저런 이유를 붙여 차가워질 때가 있기 마련이다. 그러나 다시
+						span 아침이 밝아오면 따뜻한 햇살 속에서 다시 사랑을 그리워하기도 한다. 밤 사이 멀어진 거리가 더 멀어지지 않게, 다시 돌아오는 길이 멀지 않기를. [멀어지지 않게] 는 그런 순간을 담은
+						span 노래이다.
+		.nav
+			.navis
+				.pager-prev.text-light ◀︎
+				.pager-next.text-light ▶︎
+				.navs
+					.ptos
+						ul.pto-img
+							li
+								img.img(src='../img/restmb_allidxmake.jpeg', alt='photo')
+							li
+								img.img(src='../img/54b4294b1378994cb81998728679abdd.jpg', alt='photo')
+							li
+								img.img(src='../img/Mgz_Sub_IMG_20181030112743.jpg', alt='photo')
+						ul.pto-img
+							li
+								img.img(src='../img/1030996462.jpg', alt='photo')
+							li
+								img.img(src='../img/5f3a5521d744c5a26d8b44f91765639c.jpg', alt='photo')
+							li.artist
+								img.img(src='../img/Mgz_Sub_IMG_20181030113951.jpg', alt='photo')
+		.nav
+			.video
+				iframe(src='http://www.youtube.com/embed/2_zhV_9CGik', allowfullscreen='allowfullscreen', mozallowfullscreen='mozallowfullscreen', msallowfullscreen='msallowfullscreen', oallowfullscreen='oallowfullscreen', webkitallowfullscreen='webkitallowfullscreen')
+		include ./inc/modal_vi.pug
+		include ./inc/modal_up.pug
+		include ./inc/modal_rm.pug
+		include ./inc/popup.pug
+		include ./inc/footer.pug
+		include ./inc/script.pug

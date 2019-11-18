@@ -1,0 +1,22 @@
+ul.top-navis.d-flex.justify-content-between.align-items-center.align-items-center
+	li.logo(style="margin-left:14%; width:100%;")
+		a.f-125.font-weight-bold(href="/gbook/li2") Oui Oui
+	ul.top-navi
+		li
+			a(href="/gbook/in2") WRITE
+		-	if(loginUser) {
+			li.mr-3.font-weight-bold.position-relative
+			a(href="#")
+				i.fas.fa-user-circle.mr-2
+				span= loginUser.name
+			ul.mem-edit
+				li
+					a(href="/main/edit") EDIT
+				li
+					a(href="/main/logout") LOGOUT
+		-	}	else {
+			li.mr-3
+				a(href="/main/join") SIGN IN
+			li.mr-3
+				a(href="/main/login") LOGIN
+		-	}
