@@ -8,11 +8,11 @@ ul.top-navis.d-flex.justify-content-between.align-items-center.align-items-cente
 			li.mr-3.font-weight-bold.position-relative
 			a(href="#")
 				i.fas.fa-user-circle.mr-2
-				span= loginUser.name
-			ul.mem-edit
-				li
+				span.mr-3= loginUser.name
+			ul.d-flex.mem-edit
+				li.mr-3
 					a(href="/main/edit") EDIT
-				li
+				li.mr-3
 					a(href="/main/logout") LOGOUT
 		-	}	else {
 			li.mr-3
