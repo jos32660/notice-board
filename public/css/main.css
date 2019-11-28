@@ -15,8 +15,9 @@ html,body {height: 100%; width: 100%;  background: #111930; font-family: 'Noto S
 .navi-wrap > li {cursor: pointer;}
 
 .nav {opacity: 0; position: absolute; display: none;}
-.nav-active {display: block; opacity: 1;}
-.nav .table {display: block; color:#fff; margin: 0 23%; border-bottom: 1px solid #fff; padding-top: 5%;}
+.nav-active {display: block; opacity: 1; }
+.nav.nav-table {margin: 0 15vw;}
+.nav .table {display: block; color:#fff; border-bottom: 1px solid #fff; padding-top: 5%;}
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
@@ -45,5 +46,5 @@ input[type=number]::-webkit-outer-spin-button {
 
 .video {margin:5% 53%; text-align: center;}
 .video iframe {border: none; width: 50rem; height: 30rem;}
-.pager {margin-left: 45%;}
+.pager {margin: 45%;}
 .lists .pager {margin-left:0;}

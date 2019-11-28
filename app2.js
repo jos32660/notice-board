@@ -239,7 +239,7 @@ app.post("/api/:type", mt.upload.single("upfile"), (req, res) => {
 						if(req.session.user) res.json({code: 200});
 						else {
 							obj.msg = "삭제되었습니다.";
-							obj.loc = "/gbook/li/"+page;
+							obj.loc = "/gbook/li2/"+page;
 							res.send(util.alertLocation(obj));
 						}
 					}
@@ -247,7 +247,7 @@ app.post("/api/:type", mt.upload.single("upfile"), (req, res) => {
 						if(req.session.user) res.json({code: 500});
 						else {
 							obj.msg ="패스워드가 올바르지 않습니다.";
-							obj.loc = "/gbook/li/"+page;
+							obj.loc = "/gbook/li2/"+page;
 							res.send(util.alertLocation(obj));
 						}
 					}
