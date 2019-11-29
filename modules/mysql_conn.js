@@ -1,11 +1,15 @@
 //const mysql = require("mysql"); //npm i -S mysql로 설치한 모듈 불러오기
 const mysql = require("mysql2/promise"); //npm i -S mysql2로 설치한 모듈 불러오기
 const sqlPool = mysql.createPool({
-	host: "127.0.0.1",
-	user: "gbook",
-	password: "0000",
+	host: "db.ysuuu.gabia.io",
+	user: "ysuuu",
+	password: "gej114304**",
+	database: "dbysuuu",
+	// host: "127.0.0.1",
+	// user: "su",
+	// password: "0000",
+	// database: "su",
 	port: 3306,
-	database: "gbook",
 	waitForConnections : true,
 	queueLimit: 0,
 	connectionLimit: 10
