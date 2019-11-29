@@ -46,7 +46,6 @@ input[type=number]::-webkit-outer-spin-button {
 
 .video {margin:5% 15%; text-align: center;}
 .video iframe {border: none; width: 50rem; height: 30rem;}
-.pager {}
 .lists .pager {margin-left:0;}
 
 @media screen and (min-width: 1920px){
